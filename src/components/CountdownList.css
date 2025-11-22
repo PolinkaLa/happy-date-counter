@@ -1,0 +1,89 @@
+.countdown-list {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  flex: 1;
+}
+
+.countdown-list h3 {
+  margin-bottom: 1rem;
+  color: #2d3748;
+  font-size: 1.3rem;
+}
+
+.empty-list {
+  text-align: center;
+  padding: 2rem;
+  color: #718096;
+}
+
+.empty-list span {
+  font-size: 3rem;
+  display: block;
+  margin-top: 1rem;
+}
+
+.countdown-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.countdown-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.countdown-item:hover {
+  border-color: #667eea;
+  transform: translateX(5px);
+}
+
+.countdown-item.active {
+  border-color: #667eea;
+  background: #f7fafc;
+}
+
+.countdown-item-info {
+  flex: 1;
+}
+
+.countdown-item-info h4 {
+  color: #2d3748;
+  margin-bottom: 0.25rem;
+}
+
+.countdown-item-info p {
+  color: #718096;
+  font-size: 0.9rem;
+}
+
+.countdown-item-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.btn-edit, .btn-delete {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.btn-edit:hover {
+  background: #e2e8f0;
+}
+
+.btn-delete:hover {
+  background: #fed7d7;
+}
