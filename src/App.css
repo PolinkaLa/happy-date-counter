@@ -20,45 +20,87 @@ body {
 .app-header {
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
-  padding: 1.5rem;
-  text-align: center;
+  padding: 1rem 1.5rem;
   color: white;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-.app-header h1 {
-  font-size: 2.5rem;
-  margin-bottom: 0.5rem;
+.header-content {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.header-title {
+  flex: 1;
+}
+
+.header-title h1 {
+  font-size: 2rem;
+  margin-bottom: 0.25rem;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-.app-header p {
-  font-size: 1.1rem;
+.header-title p {
+  font-size: 1rem;
   opacity: 0.9;
 }
 
 .app-container {
   display: flex;
   flex: 1;
-  gap: 2rem;
-  padding: 2rem;
+  position: relative;
   max-width: 1400px;
   margin: 0 auto;
   width: 100%;
+  overflow: hidden;
 }
 
+/* Стили для бокового меню */
 .sidebar {
   width: 350px;
+  background: white;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+  height: calc(100vh - 80px);
+  position: sticky;
+  top: 80px;
+}
+
+.sidebar-open {
+  transform: translateX(0);
+  margin-left: 0;
+}
+
+.sidebar-closed {
+  transform: translateX(-100%);
+  margin-left: -350px;
+}
+
+.sidebar-content {
+  padding: 1.5rem;
+  height: 100%;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   gap: 2rem;
 }
 
+/* Стили для основного контента */
 .main-content {
   flex: 1;
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 2rem;
+  min-height: calc(100vh - 80px);
+}
+
+.main-content-expanded {
+  margin-left: 0;
+  width: 100%;
 }
 
 .welcome-message {
@@ -71,6 +113,7 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
 .welcome-message h2 {
@@ -85,11 +128,32 @@ body {
   margin-bottom: 2rem;
 }
 
+.btn-show-sidebar {
+  background: #667eea;
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.btn-show-sidebar:hover {
+  background: #5a6fd8;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
 .features {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1.5rem;
   margin-top: 2rem;
+  max-width: 600px;
 }
 
 .feature {
@@ -116,17 +180,62 @@ body {
   color: #4a5568;
 }
 
+/* Адаптивность */
 @media (max-width: 768px) {
   .app-container {
     flex-direction: column;
-    padding: 1rem;
   }
   
   .sidebar {
     width: 100%;
+    height: auto;
+    position: fixed;
+    top: 80px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1000;
+  }
+  
+  .sidebar-closed {
+    transform: translateX(-100%);
+    margin-left: 0;
+  }
+  
+  .main-content {
+    padding: 1rem;
+    margin-left: 0 !important;
+  }
+  
+  .header-title h1 {
+    font-size: 1.5rem;
+  }
+  
+  .header-title p {
+    font-size: 0.9rem;
   }
   
   .features {
     grid-template-columns: 1fr;
+  }
+  
+  .welcome-message {
+    padding: 2rem 1rem;
+  }
+  
+  .welcome-message h2 {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-content {
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: center;
+  }
+  
+  .header-title h1 {
+    font-size: 1.3rem;
   }
 }

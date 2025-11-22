@@ -1,0 +1,94 @@
+.sidebar-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  padding: 0.75rem 1rem;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s;
+  backdrop-filter: blur(10px);
+}
+
+.sidebar-toggle:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+.toggle-icon {
+  width: 20px;
+  height: 16px;
+  position: relative;
+  transition: transform 0.3s;
+}
+
+.toggle-icon span {
+  display: block;
+  position: absolute;
+  height: 2px;
+  width: 100%;
+  background: white;
+  border-radius: 1px;
+  opacity: 1;
+  left: 0;
+  transform: rotate(0deg);
+  transition: all 0.3s;
+}
+
+.toggle-icon span:nth-child(1) {
+  top: 0;
+}
+
+.toggle-icon span:nth-child(2) {
+  top: 7px;
+}
+
+.toggle-icon span:nth-child(3) {
+  top: 14px;
+}
+
+.sidebar-toggle.open .toggle-icon span:nth-child(1) {
+  top: 2px;
+  transform: rotate(-45deg);
+}
+
+.sidebar-toggle.open .toggle-icon span:nth-child(2) {
+  opacity: 0;
+}
+
+.sidebar-toggle.open .toggle-icon span:nth-child(3) {
+  top: 14px;
+  transform: rotate(45deg);
+}
+
+.toggle-text {
+  font-weight: 600;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .sidebar-toggle {
+    padding: 0.5rem 0.75rem;
+  }
+  
+  .toggle-text {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar-toggle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    justify-content: center;
+    padding: 0;
+  }
+  
+  .toggle-text {
+    display: none;
+  }
+}

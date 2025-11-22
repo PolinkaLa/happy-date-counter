@@ -2,12 +2,14 @@ import { useState, useEffect, useReducer } from 'react'
 import Countdown from './components/Countdown'
 import CountdownForm from './components/CountdownForm'
 import CountdownList from './components/CountdownList'
+import SidebarToggle from './components/SidebarToggle'
 import { countdownReducer, initialState } from './reducers/countdownReducer'
 import './App.css'
 
 function App() {
   const [state, dispatch] = useReducer(countdownReducer, initialState)
   const [editingCountdown, setEditingCountdown] = useState(null)
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false)
 
   useEffect(() => {
     const savedCountdowns = localStorage.getItem('countdowns')
@@ -63,31 +65,45 @@ function App() {
     })
   }
 
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen)
+  }
+
   return (
     <div className="app">
       <header className="app-header">
-        <h1>✨ Таймер Обратного Отсчета ✨</h1>
-        <p>Создавайте красивые отсчеты до важных событий</p>
+        <div className="header-content">
+          <SidebarToggle 
+            isOpen={isSidebarOpen} 
+            onToggle={toggleSidebar} 
+          />
+          <div className="header-title">
+            <h1>✨ Таймер Обратного Отсчета ✨</h1>
+            <p>Создавайте красивые отсчеты до важных событий</p>
+          </div>
+        </div>
       </header>
 
       <div className="app-container">
-        <div className="sidebar">
-          <CountdownForm 
-            onSubmit={handleCreateCountdown}
-            editingCountdown={editingCountdown ? state.countdowns.find(c => c.id === editingCountdown) : null}
-            onCancel={() => setEditingCountdown(null)}
-          />
-          
-          <CountdownList
-            countdowns={state.countdowns}
-            activeCountdown={state.activeCountdown}
-            onEdit={handleEditCountdown}
-            onDelete={handleDeleteCountdown}
-            onSetActive={handleSetActiveCountdown}
-          />
+        <div className={`sidebar ${isSidebarOpen ? 'sidebar-open' : 'sidebar-closed'}`}>
+          <div className="sidebar-content">
+            <CountdownForm 
+              onSubmit={handleCreateCountdown}
+              editingCountdown={editingCountdown ? state.countdowns.find(c => c.id === editingCountdown) : null}
+              onCancel={() => setEditingCountdown(null)}
+            />
+            
+            <CountdownList
+              countdowns={state.countdowns}
+              activeCountdown={state.activeCountdown}
+              onEdit={handleEditCountdown}
+              onDelete={handleDeleteCountdown}
+              onSetActive={handleSetActiveCountdown}
+            />
+          </div>
         </div>
 
-        <div className="main-content">
+        <div className={`main-content ${isSidebarOpen ? '' : 'main-content-expanded'}`}>
           {state.activeCountdown ? (
             <Countdown 
               countdown={state.countdowns.find(c => c.id === state.activeCountdown)}
@@ -95,7 +111,15 @@ function App() {
           ) : (
             <div className="welcome-message">
               <h2>Добро пожаловать! 🎉</h2>
-              <p>Создайте свой первый обратный отсчет, используя форму слева.</p>
+              <p>Создайте свой первый обратный отсчет, используя форму в боковом меню.</p>
+              {!isSidebarOpen && (
+                <button 
+                  className="btn-show-sidebar"
+                  onClick={toggleSidebar}
+                >
+                  📋 Показать меню
+                </button>
+              )}
               <div className="features">
                 <div className="feature">
                   <span>🎯</span>
