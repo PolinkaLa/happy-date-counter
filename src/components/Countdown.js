@@ -5,6 +5,10 @@ const Countdown = ({ countdown }) => {
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft())
 
   function calculateTimeLeft() {
+    if (!countdown || !countdown.targetDate) {
+      return { days: 0, hours: 0, minutes: 0, seconds: 0 }
+    }
+
     const difference = new Date(countdown.targetDate) - new Date()
     
     if (difference > 0) {

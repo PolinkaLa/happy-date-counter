@@ -1,0 +1,354 @@
+/* AlternativeTimezone.css */
+.alternative-timezone {
+  background: white;
+  padding: 1.5rem;
+  margin-top: 2rem;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.alternative-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.alternative-header h3 {
+  color: white;
+  font-size: 1.3rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+}
+
+.timezone-icon {
+  font-size: 1.2rem;
+}
+
+.toggle-selector {
+  background: #667eea;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.toggle-selector:hover {
+  background: #5a6fd8;
+  transform: translateY(-1px);
+}
+
+.timezone-selector {
+  background: #f8fafc;
+  border-radius: 10px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid #e2e8f0;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.search-container {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.75rem 2.5rem 0.75rem 1rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.clear-search {
+  position: absolute;
+  right: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #e2e8f0;
+  border: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: all 0.2s;
+}
+
+.clear-search:hover {
+  background: #cbd5e0;
+}
+
+.popular-timezones-section h4 {
+  color: #4a5568;
+  font-size: 0.9rem;
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.popular-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.timezone-btn {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 0.5rem;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.timezone-btn:hover {
+  background: #f7fafc;
+  border-color: #cbd5e0;
+  transform: translateY(-1px);
+}
+
+.timezone-btn.selected {
+  background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+  border-color: #667eea;
+}
+
+.btn-flag {
+  font-size: 1.2rem;
+  margin-bottom: 0.25rem;
+}
+
+.btn-name {
+  font-weight: 600;
+  color: #2d3748;
+  font-size: 0.8rem;
+  margin-bottom: 0.1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+
+.btn-offset {
+  color: #718096;
+  font-size: 0.7rem;
+  font-family: 'Courier New', monospace;
+}
+
+.search-results {
+  margin-top: 1rem;
+}
+
+.search-results h4 {
+  color: #4a5568;
+  font-size: 0.9rem;
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.results-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.alternative-countdown {
+  /* background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); */
+  border-radius: 12px;
+  padding: 1.5rem;
+  color: white;
+}
+
+.timezone-info {
+  margin-bottom: 1.5rem;
+  width: fit-content;
+  justify-self: center;
+}
+
+.timezone-display {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 0.75rem;
+  border-radius: 50px;
+  backdrop-filter: blur(10px);
+  padding-left: 32px;
+  padding-right: 32px;
+}
+
+.timezone-flag {
+  font-size: 1.5rem;
+}
+
+.timezone-details {
+  flex: 1;
+}
+
+.timezone-name {
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-bottom: 0.1rem;
+}
+
+.timezone-offset {
+  font-size: 0.8rem;
+  opacity: 0.9;
+  font-family: 'Courier New', monospace;
+}
+
+.countdown-display {
+  text-align: center;
+}
+
+.time-units {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.time-unit {
+  /* text-align: center;
+  min-width: 70px; */
+    background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  padding: 1.5rem;
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: transform 0.3s;
+}
+
+.unit-value {
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  margin-bottom: 0.25rem;
+  font-family: 'Courier New', monospace;
+}
+
+.unit-label {
+  font-size: 0.9rem;
+  opacity: 0.9;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+   font-family: 'Courier New', monospace;
+}
+
+.expired-alternative {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1.5rem;
+}
+
+.expired-icon {
+  font-size: 2rem;
+}
+
+.expired-text h4 {
+  margin: 0 0 0.25rem 0;
+  font-size: 1.2rem;
+}
+
+.expired-text p {
+  margin: 0;
+  opacity: 0.9;
+  font-size: 0.9rem;
+}
+
+.alternative-note {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 0.75rem;
+  border-radius: 50px;
+  backdrop-filter: blur(10px);
+  font-size: 0.9rem;
+  width: fit-content;
+  padding-left: 32px;
+  padding-right: 32px;
+  justify-self: center;
+}
+
+.note-icon {
+  font-size: 1rem;
+}
+.alternative-overlay {
+  margin: -24px;
+  padding: 24px;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  border-radius: 15px;
+}
+
+@media (max-width: 768px) {
+  .popular-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  }
+  
+  .time-units {
+    gap: 1rem;
+  }
+  
+  .time-unit {
+    min-width: 60px;
+  }
+  
+  .unit-value {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .alternative-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .toggle-selector {
+    width: 100%;
+  }
+  
+  .time-units {
+    gap: 0.5rem;
+  }
+  
+  .time-unit {
+    min-width: 55px;
+  }
+  
+  .unit-value {
+    font-size: 1.8rem;
+  }
+}

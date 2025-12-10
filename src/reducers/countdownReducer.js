@@ -6,14 +6,35 @@ export const initialState = {
 export const countdownReducer = (state, action) => {
   switch (action.type) {
     case 'LOAD_COUNTDOWNS':
+      let loadedCountdowns = action.payload.countdowns || []
+      
+      if (!Array.isArray(loadedCountdowns)) {
+        console.warn('Countdowns data is not an array, converting:', loadedCountdowns)
+        
+        if (loadedCountdowns && typeof loadedCountdowns === 'object') {
+          loadedCountdowns = Object.values(loadedCountdowns)
+        } else {
+          loadedCountdowns = []
+        }
+      }
+
+      const validatedCountdowns = loadedCountdowns.filter(item => 
+        item && 
+        typeof item === 'object' && 
+        item.id && 
+        item.title && 
+        item.targetDate
+      )
+      
       return {
-        ...state,
-        countdowns: action.payload,
-        activeCountdown: action.payload[0]?.id || null
+        countdowns: validatedCountdowns,
+        activeCountdown: action.payload.activeCountdown || (validatedCountdowns[0]?.id || null)
       }
 
     case 'ADD_COUNTDOWN':
-      const newCountdowns = [...state.countdowns, action.payload]
+      const currentCountdowns = Array.isArray(state.countdowns) ? state.countdowns : []
+      const newCountdowns = [...currentCountdowns, action.payload]
+      
       return {
         ...state,
         countdowns: newCountdowns,
@@ -21,18 +42,23 @@ export const countdownReducer = (state, action) => {
       }
 
     case 'UPDATE_COUNTDOWN':
+      const existingCountdowns = Array.isArray(state.countdowns) ? state.countdowns : []
+      
       return {
         ...state,
-        countdowns: state.countdowns.map(c =>
+        countdowns: existingCountdowns.map(c =>
           c.id === action.payload.id ? action.payload : c
         )
       }
 
     case 'DELETE_COUNTDOWN':
-      const filteredCountdowns = state.countdowns.filter(c => c.id !== action.payload)
-      const newActiveCountdown = state.activeCountdown === action.payload 
-        ? (filteredCountdowns[0]?.id || null)
-        : state.activeCountdown
+      const allCountdowns = Array.isArray(state.countdowns) ? state.countdowns : []
+      const filteredCountdowns = allCountdowns.filter(c => c.id !== action.payload)
+
+      let newActiveCountdown = state.activeCountdown
+      if (state.activeCountdown === action.payload) {
+        newActiveCountdown = filteredCountdowns[0]?.id || null
+      }
       
       return {
         ...state,

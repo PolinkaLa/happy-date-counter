@@ -1,29 +1,66 @@
-import { useState, useEffect, useReducer } from 'react'
+// App.js - возвращаемся к первой версии с добавлением альтернативного пояса
+import React, { useState, useEffect, useReducer } from 'react'
 import Countdown from './components/Countdown'
 import CountdownForm from './components/CountdownForm'
 import CountdownList from './components/CountdownList'
 import SidebarToggle from './components/SidebarToggle'
+import AlternativeTimezone from './components/AlternativeTimezone'
 import { countdownReducer, initialState } from './reducers/countdownReducer'
 import './App.css'
 
 function App() {
   const [state, dispatch] = useReducer(countdownReducer, initialState)
   const [editingCountdown, setEditingCountdown] = useState(null)
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true)
+  const [isLoading, setIsLoading] = useState(true)
+  const [alternativeTimezone, setAlternativeTimezone] = useState('Europe/London')
 
+  // Загрузка данных из localStorage при монтировании
   useEffect(() => {
     const savedCountdowns = localStorage.getItem('countdowns')
-    if (savedCountdowns) {
-      dispatch({
-        type: 'LOAD_COUNTDOWNS',
-        payload: JSON.parse(savedCountdowns)
-      })
+    const savedActiveCountdown = localStorage.getItem('activeCountdown')
+    const savedAlternativeTZ = localStorage.getItem('alternativeTimezone')
+    
+    let parsedCountdowns = []
+    try {
+      if (savedCountdowns) {
+        parsedCountdowns = JSON.parse(savedCountdowns)
+        if (!Array.isArray(parsedCountdowns)) {
+          console.warn('Invalid countdowns data, resetting')
+          parsedCountdowns = []
+          localStorage.removeItem('countdowns')
+        }
+      }
+    } catch (error) {
+      console.error('Error parsing countdowns:', error)
+      parsedCountdowns = []
     }
+    
+    dispatch({
+      type: 'LOAD_COUNTDOWNS',
+      payload: {
+        countdowns: parsedCountdowns,
+        activeCountdown: savedActiveCountdown || (parsedCountdowns[0]?.id || null)
+      }
+    })
+    
+    if (savedAlternativeTZ) {
+      setAlternativeTimezone(savedAlternativeTZ)
+    }
+    
+    setIsLoading(false)
   }, [])
 
+  // Сохранение в localStorage при изменении
   useEffect(() => {
-    localStorage.setItem('countdowns', JSON.stringify(state.countdowns))
-  }, [state.countdowns])
+    if (!isLoading) {
+      localStorage.setItem('countdowns', JSON.stringify(state.countdowns))
+      if (state.activeCountdown) {
+        localStorage.setItem('activeCountdown', state.activeCountdown)
+      }
+      localStorage.setItem('alternativeTimezone', alternativeTimezone)
+    }
+  }, [state.countdowns, state.activeCountdown, alternativeTimezone, isLoading])
 
   const handleCreateCountdown = (countdownData) => {
     if (editingCountdown) {
@@ -33,13 +70,15 @@ function App() {
       })
       setEditingCountdown(null)
     } else {
+      const newCountdown = {
+        id: Date.now().toString(),
+        ...countdownData,
+        createdAt: new Date().toISOString()
+      }
+      
       dispatch({
         type: 'ADD_COUNTDOWN',
-        payload: {
-          id: Date.now().toString(),
-          ...countdownData,
-          createdAt: new Date().toISOString()
-        }
+        payload: newCountdown
       })
     }
   }
@@ -68,6 +107,17 @@ function App() {
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen)
   }
+
+  if (isLoading) {
+    return (
+      <div className="loading-screen">
+        <div className="loading-spinner"></div>
+        <p>Загрузка ваших отсчетов...</p>
+      </div>
+    )
+  }
+
+  const activeCountdown = state.countdowns.find(c => c.id === state.activeCountdown)
 
   return (
     <div className="app">
@@ -104,10 +154,29 @@ function App() {
         </div>
 
         <div className={`main-content ${isSidebarOpen ? '' : 'main-content-expanded'}`}>
-          {state.activeCountdown ? (
-            <Countdown 
-              countdown={state.countdowns.find(c => c.id === state.activeCountdown)}
-            />
+          {activeCountdown ? (
+            <>
+              <Countdown 
+                countdown={activeCountdown}
+              />
+              
+              <AlternativeTimezone 
+                countdown={activeCountdown}
+                timezone={alternativeTimezone}
+                onTimezoneChange={setAlternativeTimezone}
+              />
+            </>
+          ) : state.countdowns.length > 0 ? (
+            <div className="welcome-message">
+              <h2>Выберите отсчет 🎯</h2>
+              <p>У вас есть {state.countdowns.length} отсчетов. Выберите один для отображения.</p>
+              <button 
+                className="btn-show-sidebar"
+                onClick={toggleSidebar}
+              >
+                📋 Показать список отсчетов
+              </button>
+            </div>
           ) : (
             <div className="welcome-message">
               <h2>Добро пожаловать! 🎉</h2>
@@ -134,8 +203,8 @@ function App() {
                   <p>Данные сохраняются автоматически</p>
                 </div>
                 <div className="feature">
-                  <span>⚡</span>
-                  <p>Красивые анимации</p>
+                  <span>🌍</span>
+                  <p>Сравнение часовых поясов</p>
                 </div>
               </div>
             </div>
