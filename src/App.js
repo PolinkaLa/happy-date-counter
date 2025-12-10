@@ -11,7 +11,7 @@ import './App.css'
 function App() {
   const [state, dispatch] = useReducer(countdownReducer, initialState)
   const [editingCountdown, setEditingCountdown] = useState(null)
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true)
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
   const [alternativeTimezone, setAlternativeTimezone] = useState('Europe/London')
 
