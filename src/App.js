@@ -159,12 +159,12 @@ function App() {
               <Countdown 
                 countdown={activeCountdown}
               />
-              
+              {!activeCountdown.isGlobalEvent && (
               <AlternativeTimezone 
                 countdown={activeCountdown}
                 timezone={alternativeTimezone}
                 onTimezoneChange={setAlternativeTimezone}
-              />
+              />)}
             </>
           ) : state.countdowns.length > 0 ? (
             <div className="welcome-message">

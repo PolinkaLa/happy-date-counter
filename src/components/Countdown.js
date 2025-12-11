@@ -33,7 +33,8 @@ const Countdown = ({ countdown }) => {
   }, [countdown.targetDate])
 
   const containerStyle = {
-    backgroundImage: countdown.background ? `url(${countdown.background})` : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+    backgroundImage: countdown.background ? `url(${countdown.background})` : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+    height: countdown.isGlobalEvent? '100%' : 'calc((100vh - 100px - 32px)/2)'
   }
 
   const isExpired = new Date(countdown.targetDate) <= new Date()

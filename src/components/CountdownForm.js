@@ -1,11 +1,12 @@
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import './CountdownForm.css'
 
 const CountdownForm = ({ onSubmit, editingCountdown, onCancel }) => {
   const [formData, setFormData] = useState({
     title: '',
     targetDate: '',
-    background: ''
+    background: '',
+    isGlobalEvent: false
   })
 
   useEffect(() => {
@@ -13,16 +14,17 @@ const CountdownForm = ({ onSubmit, editingCountdown, onCancel }) => {
       setFormData({
         title: editingCountdown.title,
         targetDate: editingCountdown.targetDate,
-        background: editingCountdown.background
+        background: editingCountdown.background || '',
+        isGlobalEvent: editingCountdown.isGlobalEvent || false
       })
     }
   }, [editingCountdown])
 
   const handleChange = (e) => {
-    const { name, value } = e.target
+    const { name, value, type, checked } = e.target
     setFormData(prev => ({
       ...prev,
-      [name]: value
+      [name]: type === 'checkbox' ? checked : value
     }))
   }
 
@@ -47,7 +49,8 @@ const CountdownForm = ({ onSubmit, editingCountdown, onCancel }) => {
       setFormData({
         title: '',
         targetDate: '',
-        background: ''
+        background: '',
+        isGlobalEvent: false
       })
     }
   }
@@ -56,7 +59,8 @@ const CountdownForm = ({ onSubmit, editingCountdown, onCancel }) => {
     setFormData({
       title: '',
       targetDate: '',
-      background: ''
+      background: '',
+      isGlobalEvent: false
     })
     if (onCancel) onCancel()
   }
@@ -103,6 +107,32 @@ const CountdownForm = ({ onSubmit, editingCountdown, onCancel }) => {
               <img src={formData.background} alt="Preview" />
             </div>
           )}
+        </div>
+
+        <div className="form-group checkbox-group">
+          <label className="checkbox-label">
+            <input
+              type="checkbox"
+              name="isGlobalEvent"
+              checked={formData.isGlobalEvent}
+              onChange={handleChange}
+              className="checkbox-input"
+            />
+            <span className="checkbox-custom"></span>
+            <span className="checkbox-text">
+              🌍 Глобальное событие
+              <span className="checkbox-description">
+                Событие наступит одновременно во всех часовых поясах
+              </span>
+            </span>
+          </label>
+          {formData.isGlobalEvent && (
+          <div className="checkbox-hint">
+            <span className="hint-icon">💡</span>
+            <span className="hint-text">
+              Для глобальных событий не показывается альтернативный часовой пояс
+            </span>
+          </div>)}
         </div>
 
         <div className="form-actions">

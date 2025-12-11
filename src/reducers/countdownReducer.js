@@ -23,7 +23,12 @@ export const countdownReducer = (state, action) => {
         typeof item === 'object' && 
         item.id && 
         item.title && 
-        item.targetDate
+        item.targetDate &&
+        (item.isGlobalEvent === undefined || typeof item.isGlobalEvent === 'boolean'))
+        .map(item => ({
+          ...item,
+          isGlobalEvent: item.isGlobalEvent || false
+        })
       )
       
       return {

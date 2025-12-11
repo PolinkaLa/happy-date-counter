@@ -24,7 +24,11 @@ const CountdownList = ({ countdowns, activeCountdown, onEdit, onDelete, onSetAct
             onClick={() => onSetActive(countdown.id)}
           >
             <div className="countdown-item-info">
-              <h4>{countdown.title}</h4>
+              <h4>
+                {countdown.title}
+                {countdown.isGlobalEvent && (
+                <span className="global-badge" title="Глобальное событие">🌍</span>)}
+              </h4>
               <p>{new Date(countdown.targetDate).toLocaleDateString('ru-RU')}</p>
             </div>
             

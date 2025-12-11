@@ -87,3 +87,9 @@
 .btn-delete:hover {
   background: #fed7d7;
 }
+
+.global-badge {
+  margin-left: 0.5rem;
+  font-size: 0.9rem;
+  vertical-align: middle;
+}
