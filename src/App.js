@@ -7,6 +7,7 @@ import SidebarToggle from './components/SidebarToggle'
 import AlternativeTimezone from './components/AlternativeTimezone'
 import { countdownReducer, initialState } from './reducers/countdownReducer'
 import './App.css'
+import Snowfall from 'react-snowfall'
 
 function App() {
   const [state, dispatch] = useReducer(countdownReducer, initialState)
@@ -121,6 +122,7 @@ function App() {
 
   return (
     <div className="app">
+      <Snowfall  snowflakeCount={350} style={{zIndex: 100}}/>
       <header className="app-header">
         <div className="header-content">
           <SidebarToggle 
