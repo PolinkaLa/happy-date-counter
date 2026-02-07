@@ -1,4 +1,4 @@
-// App.js - возвращаемся к первой версии с добавлением альтернативного пояса
+
 import React, { useState, useEffect, useReducer } from 'react'
 import Countdown from './components/Countdown'
 import CountdownForm from './components/CountdownForm'
@@ -7,7 +7,7 @@ import SidebarToggle from './components/SidebarToggle'
 import AlternativeTimezone from './components/AlternativeTimezone'
 import { countdownReducer, initialState } from './reducers/countdownReducer'
 import './App.css'
-import Snowfall from 'react-snowfall'
+// import Snowfall from 'react-snowfall'
 
 function App() {
   const [state, dispatch] = useReducer(countdownReducer, initialState)
@@ -122,7 +122,7 @@ function App() {
 
   return (
     <div className="app">
-      <Snowfall  snowflakeCount={350} style={{zIndex: 100}}/>
+      {/* <Snowfall snowflakeCount={350} style={{zIndex: 100}}/> */}
       <header className="app-header">
         <div className="header-content">
           <SidebarToggle 
